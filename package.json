@@ -1,0 +1,24 @@
+{
+  "name": "web-developer-skill-tracker",
+  "version": "1.0.0",
+  "description": "Then `Web Developer Skill Tracker` allows you to browse for commonly recognized web developer skills and track your mastery of them over time.",
+  "main": "null",
+  "scripts": {
+    "test": "webappatron test",
+    "start": "webappatron start",
+    "build": "webappatron build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deadlyicon/web-developer-skill-tracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/deadlyicon/web-developer-skill-tracker/issues"
+  },
+  "homepage": "https://github.com/deadlyicon/web-developer-skill-tracker#readme",
+  "dependencies": {
+    "webappatron": "github:deadlyicon/webappatron"
+  }
+}

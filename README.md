@@ -24,6 +24,9 @@ As a logged in user I can view my progress toward mastery for a given skill
 As a logged in user I can become friends with other users
 As a logged in user I can see my friends rating of skill X
 As a logged in user I can search for friends who are skill level Y or higher for skill X
+As a logged in user I can see a log of when I reported I was at Y skill level for skill X
+As an admin I can merge duplicate skills
+As a logged in user I can link skills to github repos somehow
 ```
 
 
