@@ -1,9 +1,9 @@
 import React from 'react'
 import { render } from 'react-dom'
 import './index.sass'
-import Root from './components/Root'
+import Router from './Router'
 
 render(
-  <Root />,
+  <Router />,
   document.querySelector('main')
 );

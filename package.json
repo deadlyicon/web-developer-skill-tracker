@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/deadlyicon/web-developer-skill-tracker#readme",
   "dependencies": {
+    "simple-react-router": "0.0.8",
     "webappatron": "github:deadlyicon/webappatron"
   }
 }
