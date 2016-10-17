@@ -1,5 +1,6 @@
 import path from 'path'
 import express from 'express'
+import apiRoutes from './api'
 
 const publicPath = path.resolve(__dirname, '../public')
 
@@ -9,9 +10,7 @@ server.set('port', process.env.PORT || '3000')
 
 server.use(express.static(publicPath))
 
-server.get('/hello-world', (request, response) => {
-  response.send('Hello World')
-});
+server.use('/api', apiRoutes)
 
 server.get('/*', (request, response) => {
   response.sendFile(publicPath+'/index.html')
