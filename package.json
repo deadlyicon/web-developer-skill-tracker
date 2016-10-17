@@ -21,6 +21,7 @@
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.4",
     "knex": "^0.12.5",
+    "modular-admin-html": "github:modularcode/modular-admin-html#v1.0.1",
     "pg": "^6.1.0",
     "react": "^15.3.2",
     "react-addons-css-transition-group": "^15.3.2",
