@@ -9,5 +9,13 @@ router.get('/', (request, response, next) => {
   }).catch(next)
 })
 
+// CREATE
+router.post('/', (request, response, next) => {
+  const attributes = request.body
+  commands.createSkill(attributes).then(skill => {
+    response.json(skill)
+  }).catch(next)
+})
+
 
 export default router
