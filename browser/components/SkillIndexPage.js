@@ -15,7 +15,6 @@ export default (props) => (
 
 
 const SkillsIndexPage = (props) => {
-  console.log(props)
   const skills = props.skills ?
     props.skills.map(skill =>
       <Skill key={skill.id} {...skill} />
@@ -24,7 +23,7 @@ const SkillsIndexPage = (props) => {
 
   return <div>
     <h1>Skills</h1>
-    {skills}
+    <div>{skills}</div>
   </div>
 }
 
@@ -32,6 +31,5 @@ const SkillsIndexPage = (props) => {
 const Skill = (props) => {
   return <div>
     <Link href={`/skills/${props.slug}`}>{props.name}</Link>
-    <pre>{props.description||''}</pre>
   </div>
 }

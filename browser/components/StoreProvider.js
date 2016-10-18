@@ -25,7 +25,7 @@ export default class StoreProvider extends Component {
   }
 
   componentWillUnmount(){
-    this.props.unsubscribe(this.rerender)
+    this.props.store.unsubscribe(this.rerender)
   }
 
   rerender(){
@@ -33,7 +33,7 @@ export default class StoreProvider extends Component {
   }
 
   render(){
-    const givenChild = React.Children.only(this.props.children)
-    return React.cloneElement(givenChild, this.getChildProps())
+    const child = React.Children.only(this.props.children)
+    return React.cloneElement(child, this.getChildProps())
   }
 }

@@ -15,7 +15,6 @@ const request = (method, path, options={}) => {
     options.credentials = 'same-origin'
   }
 
-  console.info('fetch', path, options)
   return fetch(path, options)
 }
 

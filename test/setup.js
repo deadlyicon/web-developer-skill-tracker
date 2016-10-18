@@ -1,5 +1,3 @@
-console.log('test/setup.js')
-
 const { knex, queries, commands } = require('../server/database');
 
 global.knex = knex
