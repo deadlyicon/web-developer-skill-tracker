@@ -3,8 +3,9 @@ import request from '../request'
 
 let state = {
   allSkillIds: null,
-  skills: null,
-  tags: null,
+  skills: {},
+  tags: {},
+  skillIdsBySlug: {},
 }
 let subscribers = []
 
@@ -25,26 +26,51 @@ const unsubscribe = (subscriber) => {
     .filter(sub => subscriber !== sub)
 }
 
+const loadSession = () => {
+  request.getJSON('/session').then(session => {
+
+  })
+}
+
 const loadSkills = () => {
   state.allSkillIds || reloadSkills()
 }
 
+const addSkillToState = (skill) => {
+  state.skills[skill.id] = skill
+  state.skillIdsBySlug[skill.slug] = skill.id
+}
+
 const reloadSkills = () => {
-  request.getJSON('/api/skills').then(skills => {
-    const skillsMap = {}
-    skills.forEach(skill => skillsMap[skill.id] = skill)
-    state.allSkillIds = Object.keys(skillsMap)
-    state.skills = skillsMap
-    publish()
-  })
+  request.getJSON('/api/skills')
+    .then(skills => {
+      skills.forEach(addSkillToState)
+      state.allSkillIds = skills.map(skill => skill.id)
+      publish()
+    })
+    .catch(error => {
+      if (error.response.status === 404)
+      console.warn('reloadSkills failed', error)
+      console.error(error)
+    })
 }
 
 const loadSkillBySlug = (skillSlug) => {
-  request.getJSON(`/api/skills/${skillSlug}`).then(skill => {
-    state.skills = state.skills || {}
-    state.skills[skill.id] = skill
-    publish()
-  })
+  request.getJSON(`/api/skills/${skillSlug}`)
+    .then(skill => {
+      addSkillToState(skill)
+      publish()
+    })
+    .catch(error => {
+      if (error.response && error.response.status === 404){
+        state.skillIdsBySlug[skillSlug] = null
+        publish()
+      }else{
+        console.warn('reloadSkills failed', error)
+        console.error(error)
+        throw error
+      }
+    })
 }
 
 

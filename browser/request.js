@@ -40,6 +40,16 @@ const addHeader = (options, header, value) => {
   options.headers[header] = value
 }
 
-const getJSON = request => request.json()
+const getJSON = response =>
+  response.json().then(json => {
+    if (response.status >= 400) {
+      const error = new Error(json.error.message)
+      error.response = response
+      error.json = json
+      throw error
+    }else{
+      return json
+    }
+  })
 
 window.DEBUG_request = request;

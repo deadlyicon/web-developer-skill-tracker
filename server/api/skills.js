@@ -13,7 +13,7 @@ router.get('/', (request, response, next) => {
 router.get('/:skillSlug', (request, response, next) => {
   const { skillSlug } = request.params
   queries.getSkillBySlug(skillSlug).then(skill => {
-    response.status(skill ? 200 : 404)
+    if (!skill) return next()
     response.json(skill)
   }).catch(next)
 })

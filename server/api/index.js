@@ -27,9 +27,10 @@ if (process.env.NODE_ENV === 'development') {
   router.use((error, request, response, next) => {
     response.status(error.status || 500);
     response.json({
-      message: error.message,
-      error: error,
-      stack: error.stack,
+      error: {
+        message: error.message,
+        stack: error.stack,
+      }
     });
   });
 }else{
@@ -38,9 +39,9 @@ if (process.env.NODE_ENV === 'development') {
   router.use((error, request, response, next) => {
     response.status(error.status || 500);
     response.json({
-      message: error.message,
-      error: {},
-      stack: [],
+      error: {
+        message: error.message
+      }
     });
   });
 }

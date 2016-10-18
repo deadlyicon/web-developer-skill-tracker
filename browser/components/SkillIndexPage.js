@@ -20,7 +20,10 @@ export default class SkillsIndexPage extends Component {
 
     return <Layout>
       <h1>Skills</h1>
-      <div>{skillComponents}</div>
+      <div>
+        <Link href={`/skills/bad-link`}>bad skill</Link>
+        {skillComponents}
+      </div>
     </Layout>
   }
 }

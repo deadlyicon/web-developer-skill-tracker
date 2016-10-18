@@ -18,6 +18,7 @@ export default class App extends Component {
   }
 
   render(){
+    console.log('STATE', JSON.parse(JSON.stringify(state.getState())))
     return <Router state={state.getState()} />
   }
 }

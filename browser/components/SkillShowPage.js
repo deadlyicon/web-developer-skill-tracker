@@ -22,8 +22,10 @@ export default class SkillsShowPage extends Component {
 
   render(){
     const { skillSlug } = this.props.location.params
-    const { skills } = this.props.state
-    const skill = findSkill(skills, skillSlug)
+    const { skills, skillIdsBySlug } = this.props.state
+    const skillId = skillIdsBySlug[skillSlug]
+    if (skillId === null) return <Layout>Skill Not Found</Layout>
+    const skill = skillId && skills[skillId]
     if (!skill) return <Layout>Loading…</Layout>
     return <Layout>
       <h1>{skill.name}</h1>
@@ -31,14 +33,4 @@ export default class SkillsShowPage extends Component {
       <pre>{skill.description||''}</pre>
     </Layout>
   }
-}
-
-const findSkill = (skills, skillSlug) => {
-  if (!skills) return
-  let skill
-  Object.keys(skills).forEach(skillId => {
-    if (!skill && skills[skillId].slug === skillSlug)
-      skill = skills[skillId]
-  })
-  return skill
 }
