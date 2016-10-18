@@ -9,10 +9,20 @@ router.get('/', (request, response, next) => {
   }).catch(next)
 })
 
+// SHOW
+router.get('/:skillSlug', (request, response, next) => {
+  const { skillSlug } = request.params
+  queries.getSkillBySlug(skillSlug).then(skill => {
+    response.status(skill ? 200 : 404)
+    response.json(skill)
+  }).catch(next)
+})
+
 // CREATE
 router.post('/', (request, response, next) => {
   const attributes = request.body
   commands.createSkill(attributes).then(skill => {
+    response.status(skill ? 201 : 400)
     response.json(skill)
   }).catch(next)
 })

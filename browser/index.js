@@ -7,3 +7,8 @@ render(
   <Router />,
   document.querySelector('main')
 );
+
+
+// DEBUGGING
+window.DEBUG = window.DEBUG || {}
+window.DEBUG.React = React

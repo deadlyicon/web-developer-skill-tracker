@@ -10,6 +10,9 @@ export default (props) => (
         <Link className="nav-link" href="/">Home</Link>
       </NavItem>
       <NavItem>
+        <Link className="nav-link" href="/skills">Skills</Link>
+      </NavItem>
+      <NavItem>
         <Link className="nav-link" href="/about">About</Link>
       </NavItem>
     </Nav>
