@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/deadlyicon/web-developer-skill-tracker#readme",
   "dependencies": {
+    "body-parser": "^1.15.2",
     "bootstrap": "^4.0.0-alpha.4",
     "knex": "^0.12.5",
     "pg": "^6.1.0",
