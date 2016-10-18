@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Router from '../Router'
 import state from '../state'
 
+state.loadCurrentUser()
+
 export default class App extends Component {
   constructor(props){
     super(props)

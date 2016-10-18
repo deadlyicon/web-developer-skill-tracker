@@ -5,8 +5,6 @@ import HomePage from './components/HomePage'
 import SkillIndexPage from './components/SkillIndexPage'
 import SkillShowPage from './components/SkillShowPage'
 
-
-
 export default class Router extends SimpleReactRouter {
   getRoutes(map, {state}){
     map('/',                   HomePage)

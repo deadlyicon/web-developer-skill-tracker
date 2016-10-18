@@ -2,6 +2,7 @@ import Immutable from 'seamless-immutable'
 import request from '../request'
 
 let state = {
+  currentUser: null,
   allSkillIds: null,
   skills: {},
   tags: {},
@@ -26,9 +27,10 @@ const unsubscribe = (subscriber) => {
     .filter(sub => subscriber !== sub)
 }
 
-const loadSession = () => {
-  request.getJSON('/session').then(session => {
-
+const loadCurrentUser = () => {
+  request.getJSON('/current-user').then(currentUser => {
+    state.currentUser = currentUser
+    publish()
   })
 }
 
@@ -78,6 +80,7 @@ export default {
   getState,
   subscribe,
   unsubscribe,
+  loadCurrentUser,
   loadSkills,
   reloadSkills,
   loadSkillBySlug,

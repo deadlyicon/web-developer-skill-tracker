@@ -6,10 +6,6 @@ const router = express.Router()
 
 router.get('/login_via_github', GithubOauth.redirectToLoginViaGithub)
 
-const findOrCreateUser = (githubProfile) => {
-  return Promise.resolve({})
-}
-
 router.get(GithubOauth.callbackPath, GithubOauth.oauthCallbackHanler(
   commands.findOrCreateUserFromGithubProfile
 ))
@@ -19,12 +15,10 @@ router.post('/logout', (request, response, next) => {
   response.json({})
 })
 
-router.get('/session', (request, response) => {
-  if (!request.session.userId) return response.json(request.session)
+router.get('/current-user', (request, response) => {
+  if (!request.session.userId) return response.json({})
   queries.getUserById(request.session.userId)
-    .then(user => {
-      response.json({...request.session, user})
-    })
+    .then(user => response.json(user))
 });
 
 
