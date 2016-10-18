@@ -18,7 +18,6 @@ class Store {
 
   load(){
     return this.fetch().then(value => {
-      if (value instanceof request.Response) value = value.json
       this.value = value
       this.trigger()
       return value

@@ -26,27 +26,20 @@ export default request
 
 request.getJSON = (path, options={}) => {
   addHeader(options, 'Content-Type', 'application/json; charset=utf-8')
-  return request('GET', path, options)
-    .then(loadJSON)
+  return request('GET', path, options).then(getJSON)
 }
 
 request.postJSON = (path, body=null, options={}) => {
   options.body = JSON.stringify(body)
   addHeader(options, 'Content-Type', 'application/json; charset=utf-8')
-  return request('POST', path, options)
-    .then(loadJSON)
+  return request('POST', path, options).then(getJSON)
 }
-
 
 const addHeader = (options, header, value) => {
   options.headers = options.headers || {}
   options.headers[header] = value
 }
 
-const loadJSON = (request) =>
-  request.json().then(json => {
-    request.json = json
-    return request
-  })
+const getJSON = request => request.json()
 
 window.DEBUG_request = request;
