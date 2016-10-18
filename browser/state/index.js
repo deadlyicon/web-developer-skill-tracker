@@ -2,6 +2,7 @@ import Immutable from 'seamless-immutable'
 import request from '../request'
 
 let state = {
+  allSkillIds: null,
   skills: null,
   tags: null,
 }
@@ -25,13 +26,14 @@ const unsubscribe = (subscriber) => {
 }
 
 const loadSkills = () => {
-  state.skills || reloadSkills()
+  state.allSkillIds || reloadSkills()
 }
 
 const reloadSkills = () => {
   request.getJSON('/api/skills').then(skills => {
     const skillsMap = {}
     skills.forEach(skill => skillsMap[skill.id] = skill)
+    state.allSkillIds = Object.keys(skillsMap)
     state.skills = skillsMap
     publish()
   })

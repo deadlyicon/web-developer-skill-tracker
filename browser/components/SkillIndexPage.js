@@ -7,7 +7,7 @@ import state from '../state'
 export default class SkillsIndexPage extends Component {
   constructor(props){
     super(props)
-    state.reloadSkills()
+    state.loadSkills()
   }
 
   render() {
@@ -27,7 +27,7 @@ export default class SkillsIndexPage extends Component {
 
 const Skill = ({skill}) => {
   const tags = skill.tags.map(tag =>
-    <span>{tag}</span>
+    <span key={tag}>{tag}</span>
   )
   return <div>
     <Link href={`/skills/${skill.slug}`}>{skill.name}</Link>

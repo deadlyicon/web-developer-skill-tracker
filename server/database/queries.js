@@ -15,6 +15,7 @@ const getSkillBySlug = (slug) =>
   knex
     .table('skills')
     .where('slug', slug)
+    .limit(1)
     .then(loadTagsForSkills)
     .then(firstRecord)
 
