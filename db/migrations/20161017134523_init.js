@@ -2,8 +2,10 @@ exports.up = function(knex, Promise) {
   return Promise.all([
     knex.schema.createTable('users', (table) =>  {
       table.increments('id').primary()
+      table.integer('github_id').unique()
       table.string('email').unique()
-      table.string('password')
+      table.string('name')
+      table.string('avatar_url')
       table.timestamps()
     }),
 

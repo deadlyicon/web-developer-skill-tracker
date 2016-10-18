@@ -28,6 +28,21 @@ const deleteRecord = (table, id) =>
 
 //
 
+const createUser = (attributes) =>
+  createRecord('users', attributes)
+
+const findOrCreateUserFromGithubProfile = (githubProfile) => {
+  const github_id = githubProfile.id
+  const userAttributes = {
+    github_id: github_id,
+    name: githubProfile.name,
+    email: githubProfile.email,
+    avatar_url: githubProfile.avatar_url,
+  }
+  return knex.table('users').where('github_id', github_id).first('*')
+    .then(user => user ? user : createUser(userAttributes))
+}
+
 const nameToSlug = name =>
   String(name).toLowerCase().replace(/[\.\/ #]+/g, '-')
 
@@ -38,4 +53,6 @@ const createSkill = (attributes) => {
 
 export default {
   createSkill,
+  createUser,
+  findOrCreateUserFromGithubProfile,
 }

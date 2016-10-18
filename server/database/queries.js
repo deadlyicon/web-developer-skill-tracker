@@ -8,6 +8,10 @@ const getRecords = (table) =>
 const getRecordById = (table, id) =>
   knex.table(table).where('id', id).first('*')
 
+const getUserById = (id) =>
+  getRecordById('users', id)
+
+
 const getSkills = () =>
   getRecords('skills').then(loadTagsForSkills)
 
@@ -37,6 +41,7 @@ const loadTagsForSkills = (skills) => {
 }
 
 export default {
+  getUserById,
   getSkills,
   getSkillBySlug,
 }

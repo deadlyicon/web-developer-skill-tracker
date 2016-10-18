@@ -21,6 +21,8 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "bootstrap": "^4.0.0-alpha.4",
+    "cookie-session": "^2.0.0-alpha.1",
+    "dotenv": "^2.0.0",
     "immutable": "^3.8.1",
     "knex": "^0.12.5",
     "pg": "^6.1.0",
