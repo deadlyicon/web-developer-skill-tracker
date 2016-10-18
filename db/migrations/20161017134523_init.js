@@ -16,8 +16,20 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('skills', (table) => {
       table.increments('id').primary()
       table.string('slug').unique()
-      table.string('name')
+      table.string('name').unique()
       table.text('description')
+    }),
+
+    knex.schema.createTable('skill_tags', (table) => {
+      table.integer('skill_id')
+      table.integer('tag_id')
+      table.unique(['skill_id', 'tag_id'])
+    }),
+
+    knex.schema.createTable('tags', (table) => {
+      table.increments('id').primary()
+      table.string('slug').unique()
+      table.string('name').unique()
     }),
   ])
 };

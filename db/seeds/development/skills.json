@@ -1,10 +1,62 @@
 [
   {
     "name": "git rebase",
-    "description": "rebasing a branch with git"
+    "description": "rebasing a branch with git",
+    "tags": ["git"]
   },
   {
     "name": "binding to dom event listeners",
-    "description": "binding to dom event listeners"
+    "description": "binding to dom event listeners",
+    "tags": ["browser", "DOM", "event binding"]
+  },
+  {
+    "name": "forking a repository",
+    "description": "",
+    "tags": ["git", "GitHub"]
+  },
+  {
+    "name": "making pull requests",
+    "description": "",
+    "tags": ["git", "GitHub"]
+  },
+  {
+    "name": "managing multiple remotes",
+    "description": "",
+    "tags": ["git"]
+  },
+  {
+    "name": "rebasing to polish a branch",
+    "description": "",
+    "tags": ["git"]
+  },
+  {
+    "name": "resolving merge conflicts",
+    "description": "",
+    "tags": ["git"]
+  },
+  {
+    "name": "when to use and not to use git push --force",
+    "description": "",
+    "tags": ["git"]
+  },
+  {
+    "name": "how to write a good commit message",
+    "description": "",
+    "tags": ["git"]
+  },
+  {
+    "name": "git add --patch",
+    "description": "",
+    "tags": ["git"]
+  },
+  {
+    "name": "git reset --patch",
+    "description": "",
+    "tags": ["git"]
+  },
+  {
+    "name": "git checkout --patch",
+    "description": "",
+    "tags": ["git"]
   }
 ]
