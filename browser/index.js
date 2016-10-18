@@ -1,14 +1,10 @@
+import './index.sass'
 import React from 'react'
 import { render } from 'react-dom'
-import './index.sass'
-import Router from './Router'
+import App from './components/App'
 
 render(
-  <Router />,
+  <App />,
   document.querySelector('main')
 );
 
-
-// DEBUGGING
-window.DEBUG = window.DEBUG || {}
-window.DEBUG.React = React

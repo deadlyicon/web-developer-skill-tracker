@@ -1,9 +1,9 @@
 import React from 'react'
 import Link from './Link'
-import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap'
+import { Navbar as BootstrapNavbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap'
 
-export default (props) => (
-  <Navbar color="faded" light>
+const Navbar = (props) => (
+  <BootstrapNavbar color="faded" light>
     <NavbarBrand href="/">Skill Tracker</NavbarBrand>
     <Nav className="pull-xs-right" navbar>
       <NavItem>
@@ -16,5 +16,6 @@ export default (props) => (
         <Link className="nav-link" href="/about">About</Link>
       </NavItem>
     </Nav>
-  </Navbar>
+  </BootstrapNavbar>
 )
+export default Navbar

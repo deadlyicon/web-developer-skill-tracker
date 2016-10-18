@@ -8,7 +8,7 @@ import SkillShowPage from './components/SkillShowPage'
 
 
 export default class Router extends SimpleReactRouter {
-  routes(map){
+  getRoutes(map, {state}){
     map('/',                   HomePage)
     map('/skills',             SkillIndexPage)
     map('/skills/:skillSlug',  SkillShowPage)

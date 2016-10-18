@@ -1,35 +1,36 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Container, Row, Col, Jumbotron, Button } from 'reactstrap'
 import Link from './Link'
 import Layout from './Layout'
-import StoreProvider from './StoreProvider'
-import skillsStore from '../stores/skillsStore'
+import state from '../state'
 
-export default (props) => (
-  <Layout>
-    <StoreProvider store={skillsStore} as="skills">
-      <SkillsIndexPage />
-    </StoreProvider>
-  </Layout>
-)
+export default class SkillsIndexPage extends Component {
+  constructor(props){
+    super(props)
+    state.reloadSkills()
+  }
 
+  render() {
+    const skills = this.props.state.skills
+    const skillComponents = skills ?
+      Object.keys(skills).map(skillId =>
+        <Skill key={skillId} skill={skills[skillId]}/>
+      ) :
+      null
 
-const SkillsIndexPage = (props) => {
-  const skills = props.skills ?
-    props.skills.map(skill =>
-      <Skill key={skill.id} {...skill} />
-    ) :
-    null
-
-  return <div>
-    <h1>Skills</h1>
-    <div>{skills}</div>
-  </div>
+    return <Layout>
+      <h1>Skills</h1>
+      <div>{skillComponents}</div>
+    </Layout>
+  }
 }
 
-
-const Skill = (props) => {
+const Skill = ({skill}) => {
+  const tags = skill.tags.map(tag =>
+    <span>{tag}</span>
+  )
   return <div>
-    <Link href={`/skills/${props.slug}`}>{props.name}</Link>
+    <Link href={`/skills/${skill.slug}`}>{skill.name}</Link>
+    <span>{tags}</span>
   </div>
 }

@@ -1,25 +1,44 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Container, Row, Col, Jumbotron, Button } from 'reactstrap'
 import Layout from './Layout'
-import StoreProvider from './StoreProvider'
+import state from '../state'
 
+export default class SkillsShowPage extends Component {
+  constructor(props){
+    super(props)
+    this.loadSkill(props.location.params.skillSlug)
+  }
 
-export default (props) => (
-  <Layout>
-    <StoreProvider store={skillsStore} as="skills">
-      <SkillsShowPage {...props} />
-    </StoreProvider>
-  </Layout>
-)
+  componentWillReceiveProps(newProps){
+    const params = this.props.location.params
+    const newParams = newProps.location.params
+    if (params.skillSlug !== newParams.skillSlug)
+      this.loadSkill(newParams.skillSlug)
+  }
 
-const SkillsShowPage = (props) => {
-  const { skillSlug } = props.location.params
-  const skill = props.skills && props.skills
-    .find(skill => skill.slug === skillSlug)
+  loadSkill(skillSlug){
+    state.loadSkillBySlug(skillSlug)
+  }
 
-  if (!skill) return <div>Loading…</div>
-  return <div>
-    <h1>{skill.name}</h1>
-    <pre>{skill.description||''}</pre>
-  </div>
+  render(){
+    const { skillSlug } = this.props.location.params
+    const { skills } = this.props.state
+    const skill = findSkill(skills, skillSlug)
+    if (!skill) return <Layout>Loading…</Layout>
+    return <Layout>
+      <h1>{skill.name}</h1>
+      <div>{skill.tags.join(', ')}</div>
+      <pre>{skill.description||''}</pre>
+    </Layout>
+  }
+}
+
+const findSkill = (skills, skillSlug) => {
+  if (!skills) return
+  let skill
+  Object.keys(skills).forEach(skillId => {
+    if (!skill && skills[skillId].slug === skillSlug)
+      skill = skills[skillId]
+  })
+  return skill
 }

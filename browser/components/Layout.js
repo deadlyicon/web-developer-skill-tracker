@@ -2,7 +2,7 @@ import React from 'react'
 import { Container } from 'reactstrap'
 import Navbar from './Navbar'
 
-export default (props) => (
+const Layout = (props) => (
   <div>
     <Navbar />
     <Container fluid>
@@ -10,3 +10,5 @@ export default (props) => (
     </Container>
   </div>
 )
+
+export default Layout
