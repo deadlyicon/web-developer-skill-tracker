@@ -1,10 +1,10 @@
 import React from 'react'
 import { Container } from 'reactstrap'
-import Navbar from './Navbar'
+import TopNavbar from './TopNavbar'
 
 const Layout = (props) => (
   <div>
-    <Navbar />
+    <TopNavbar currentUser={props.currentUser} />
     <Container fluid>
       {props.children}
     </Container>

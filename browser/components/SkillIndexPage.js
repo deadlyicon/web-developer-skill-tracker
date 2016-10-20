@@ -2,23 +2,23 @@ import React, { Component } from 'react'
 import { Container, Row, Col, Jumbotron, Button } from 'reactstrap'
 import Link from './Link'
 import Layout from './Layout'
-import state from '../state'
+import { loadSkills } from '../actions'
 
 export default class SkillsIndexPage extends Component {
   constructor(props){
     super(props)
-    state.loadSkills()
+    loadSkills()
   }
 
   render() {
-    const skills = this.props.state.skills
+    const { currentUser, skills } = this.props
     const skillComponents = skills ?
       Object.keys(skills).map(skillId =>
         <Skill key={skillId} skill={skills[skillId]}/>
       ) :
       null
 
-    return <Layout>
+    return <Layout currentUser={currentUser}>
       <h1>Skills</h1>
       <div>
         <Link href={`/skills/bad-link`}>bad skill</Link>

@@ -1,5 +1,4 @@
 import Immutable from 'seamless-immutable'
-import request from '../request'
 
 let state = {
   currentUser: null,
@@ -8,80 +7,47 @@ let state = {
   tags: {},
   skillIdsBySlug: {},
 }
+
+let currentState = Immutable(state)
+
+export const getState = () => {
+  return currentState = currentState || Immutable(state)
+}
+
+export const setState = (updates) => {
+  let lastState = currentState
+  Object.assign(state, updates)
+  currentState = null
+  // console.log('setState', updates, {from: lastState, to: state})
+  schedulePublish()
+}
+
 let subscribers = []
+let publishTimeout = null
 
-const getState = () => Immutable(state)
-
-const publish = () => {
-  subscribers.forEach(subscriber => {
-    subscriber(getState())
-  })
-}
-
-const subscribe = (subscriber) => {
-  subscribers.push(subscriber)
-}
-
-const unsubscribe = (subscriber) => {
-  subscribers = this.subscribers
-    .filter(sub => subscriber !== sub)
-}
-
-const loadCurrentUser = () => {
-  request.getJSON('/current-user').then(currentUser => {
-    state.currentUser = currentUser
+const schedulePublish = () => {
+  if (publishTimeout) return
+  console.log('scheduling publish')
+  publishTimeout = setTimeout(() => {
+    publishTimeout = null
     publish()
   })
 }
 
-const loadSkills = () => {
-  state.allSkillIds || reloadSkills()
+// export { schedulePublish as publish }
+
+const publish = () => {
+  const state = getState()
+  console.log('publishing STATE', JSON.parse(JSON.stringify(state)))
+  subscribers.forEach(subscriber => subscriber(state))
 }
 
-const addSkillToState = (skill) => {
-  state.skills[skill.id] = skill
-  state.skillIdsBySlug[skill.slug] = skill.id
+export const subscribe = (subscriber) => {
+  subscribers.push(subscriber)
 }
 
-const reloadSkills = () => {
-  request.getJSON('/api/skills')
-    .then(skills => {
-      skills.forEach(addSkillToState)
-      state.allSkillIds = skills.map(skill => skill.id)
-      publish()
-    })
-    .catch(error => {
-      if (error.response.status === 404)
-      console.warn('reloadSkills failed', error)
-      console.error(error)
-    })
+export const unsubscribe = (subscriber) => {
+  subscribers = this.subscribers
+    .filter(sub => subscriber !== sub)
 }
 
-const loadSkillBySlug = (skillSlug) => {
-  request.getJSON(`/api/skills/${skillSlug}`)
-    .then(skill => {
-      addSkillToState(skill)
-      publish()
-    })
-    .catch(error => {
-      if (error.response && error.response.status === 404){
-        state.skillIdsBySlug[skillSlug] = null
-        publish()
-      }else{
-        console.warn('reloadSkills failed', error)
-        console.error(error)
-        throw error
-      }
-    })
-}
-
-
-export default {
-  getState,
-  subscribe,
-  unsubscribe,
-  loadCurrentUser,
-  loadSkills,
-  reloadSkills,
-  loadSkillBySlug,
-}

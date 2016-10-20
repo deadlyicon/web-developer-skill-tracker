@@ -1,8 +1,7 @@
 import React from 'react'
-import Navbar from './Navbar'
+import Layout from './Layout'
 
 export default (props) =>
-  <div>
-    <Navbar />
+  <Layout currentUser={props.currentUser}>
     <h1>NotFound {props.location.params.path}</h1>
-  </div>
+  </Layout>

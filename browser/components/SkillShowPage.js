@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Container, Row, Col, Jumbotron, Button } from 'reactstrap'
 import Layout from './Layout'
-import state from '../state'
+import { loadSkillBySlug } from '../actions'
 
 export default class SkillsShowPage extends Component {
   constructor(props){
@@ -17,17 +17,21 @@ export default class SkillsShowPage extends Component {
   }
 
   loadSkill(skillSlug){
-    state.loadSkillBySlug(skillSlug)
+    loadSkillBySlug(skillSlug)
   }
 
   render(){
-    const { skillSlug } = this.props.location.params
-    const { skills, skillIdsBySlug } = this.props.state
+    const { currentUser, skills, skillIdsBySlug, location } = this.props
+    const { skillSlug } = location.params
     const skillId = skillIdsBySlug[skillSlug]
-    if (skillId === null) return <Layout>Skill Not Found</Layout>
+    if (skillId === null) return (
+      <Layout currentUser={currentUser}>Skill Not Found</Layout>
+    )
     const skill = skillId && skills[skillId]
-    if (!skill) return <Layout>Loading…</Layout>
-    return <Layout>
+    if (!skill) return (
+      <Layout currentUser={currentUser}>Loading…</Layout>
+    )
+    return <Layout currentUser={currentUser}>
       <h1>{skill.name}</h1>
       <div>{skill.tags.join(', ')}</div>
       <pre>{skill.description||''}</pre>

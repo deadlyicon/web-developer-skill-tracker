@@ -1,31 +1,31 @@
 import React, { Component } from 'react'
 import Router from '../Router'
-import state from '../state'
-
-state.loadCurrentUser()
+import { subscribe, unsubscribe, getState } from '../state'
+import { loadCurrentUser } from '../actions'
 
 export default class App extends Component {
   constructor(props){
     super(props)
     this.rerender = this.rerender.bind(this)
-    state.subscribe(this.rerender)
+    subscribe(this.rerender)
+    loadCurrentUser()
   }
 
   componentWillUnmount(){
-    state.unsubscribe(this.rerender)
+    unsubscribe(this.rerender)
   }
 
   rerender(){
-    this.forceUpdate()
+    requestAnimationFrame(() => this.forceUpdate())
   }
 
   render(){
-    console.log('STATE', JSON.parse(JSON.stringify(state.getState())))
-    return <Router state={state.getState()} />
+    const props = getState()
+    return <Router {...props} />
   }
 }
 
 // DEBUGGING
 window.DEBUG = window.DEBUG || {}
-window.DEBUG.state = state
+window.DEBUG.getState = getState
 window.DEBUG.React = React

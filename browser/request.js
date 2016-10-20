@@ -30,7 +30,7 @@ request.getJSON = (path, options={}) => {
 }
 
 request.postJSON = (path, body=null, options={}) => {
-  options.body = JSON.stringify(body)
+  if (body) options.body = JSON.stringify(body)
   addHeader(options, 'Content-Type', 'application/json; charset=utf-8')
   return request('POST', path, options).then(getJSON)
 }
