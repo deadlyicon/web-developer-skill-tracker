@@ -1,12 +1,15 @@
 import Immutable from 'seamless-immutable'
 
-let state = {
+const state = {
   currentUser: null,
   allSkillIds: null,
   skills: {},
   tags: {},
   skillIdsBySlug: {},
 }
+
+window.DEBUG = window.DEBUG || {}
+window.DEBUG.__state = state;
 
 let currentState = Immutable(state)
 
@@ -15,10 +18,12 @@ export const getState = () => {
 }
 
 export const setState = (updates) => {
-  let lastState = currentState
-  Object.assign(state, updates)
+  if (typeof updates === 'function') {
+    updates(state)
+  }else{
+    Object.assign(state, updates)
+  }
   currentState = null
-  // console.log('setState', updates, {from: lastState, to: state})
   schedulePublish()
 }
 
@@ -27,18 +32,14 @@ let publishTimeout = null
 
 const schedulePublish = () => {
   if (publishTimeout) return
-  console.log('scheduling publish')
   publishTimeout = setTimeout(() => {
     publishTimeout = null
     publish()
   })
 }
 
-// export { schedulePublish as publish }
-
 const publish = () => {
   const state = getState()
-  console.log('publishing STATE', JSON.parse(JSON.stringify(state)))
   subscribers.forEach(subscriber => subscriber(state))
 }
 

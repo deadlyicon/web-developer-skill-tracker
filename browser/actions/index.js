@@ -20,9 +20,9 @@ export const loadSkills = () => {
 
 export const addSkillToState = (skill) => {
   const state = getState()
-  setState({
-    skills: state.skills.merge({[skill.id]: skill}),
-    skillIdsBySlug: state.skillIdsBySlug.merge({[skill.slug]: skill.id}),
+  setState( state => {
+    state.skills[skill.id] = skill
+    state.skillIdsBySlug[skill.slug] = skill.id
   })
 }
 
@@ -47,8 +47,8 @@ export const loadSkillBySlug = (skillSlug) => {
     })
     .catch(error => {
       if (error.response && error.response.status === 404){
-        setState({
-          skillIdsBySlug: getState().skillIdsBySlug.merge({[skillSlug]: null}),
+        setState(state => {
+          state.skillIdsBySlug[skillSlug] = null
         })
       }else{
         console.warn('reloadSkills failed', error)
