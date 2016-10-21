@@ -57,3 +57,11 @@ export const loadSkillBySlug = (skillSlug) => {
       }
     })
 }
+
+export const createSkill = (skill) => {
+  return request.postJSON('/api/skills', skill)
+    .then(skill => {
+      addSkillToState(skill)
+      return skill
+    })
+}

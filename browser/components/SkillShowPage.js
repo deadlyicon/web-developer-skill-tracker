@@ -33,7 +33,7 @@ export default class SkillsShowPage extends Component {
     )
     return <Layout currentUser={currentUser}>
       <h1>{skill.name}</h1>
-      <div>{skill.tags.join(', ')}</div>
+      <div>{(skill.tags || []).join(', ')}</div>
       <pre>{skill.description||''}</pre>
     </Layout>
   }

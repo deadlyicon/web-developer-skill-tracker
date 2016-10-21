@@ -13,37 +13,25 @@ const router = new express.Router()
 router.use('/skills', skillsRoutes)
 
 
-// error handlers
-// catch 404 and forward to error handler
+// render 404 not found
 router.use((request, response, next) => {
   const error = new Error('Not Found');
   error.status = 404;
   next(error);
 });
 
-// development error handler
-// will print stacktrace
-if (process.env.NODE_ENV === 'development') {
-  router.use((error, request, response, next) => {
-    response.status(error.status || 500);
-    response.json({
-      error: {
-        message: error.message,
-        stack: error.stack,
-      }
-    });
+// catch and render errors
+router.use((error, request, response, next) => {
+  let status = error.status || 500
+  if (error.type === 'Validation Error') status = 400
+  response.status(status).json({
+    error: {
+      type: error.type || 'Unknown',
+      message: error.message,
+      stack: error.stack,
+      payload: error.payload,
+    }
   });
-}else{
-  // production error handler
-  // no stacktraces leaked to user
-  router.use((error, request, response, next) => {
-    response.status(error.status || 500);
-    response.json({
-      error: {
-        message: error.message
-      }
-    });
-  });
-}
+});
 
 export default router

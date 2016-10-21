@@ -47,8 +47,26 @@ const nameToSlug = name =>
   String(name).toLowerCase().replace(/[\.\/ #]+/g, '-')
 
 const createSkill = (attributes) => {
+  const validationErrors = {}
+  if (!attributes.description) validationErrors.description = 'Cannot be blank'
+  if (!attributes.name)        validationErrors.name = 'Cannot be blank'
+  if (Object.keys(validationErrors).length > 0) throwValidationError(validationErrors)
+
   if (!attributes.slug) attributes.slug = nameToSlug(attributes.name)
   return createRecord('skills', attributes)
+    .catch(error => {
+      if (error.message.includes('duplicate key value violates unique constraint "skills_slug_unique"')){
+        throwValidationError({name: 'Name has already been taken'})
+      }
+      throw error
+    })
+}
+
+const throwValidationError = (validationErrors) => {
+  const error = new Error('Validation Failed')
+  error.type = 'Validation Error'
+  error.payload = validationErrors
+  throw error
 }
 
 export default {

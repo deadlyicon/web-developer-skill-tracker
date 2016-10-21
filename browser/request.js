@@ -44,6 +44,7 @@ const getJSON = response =>
   response.json().then(json => {
     if (response.status >= 400) {
       const error = new Error(json.error.message)
+      Object.assign(error, json.error)
       error.response = response
       error.json = json
       throw error

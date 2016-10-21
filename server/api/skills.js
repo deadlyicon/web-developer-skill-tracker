@@ -22,7 +22,8 @@ router.get('/:skillSlug', (request, response, next) => {
 router.post('/', (request, response, next) => {
   const attributes = request.body
   commands.createSkill(attributes).then(skill => {
-    response.status(skill ? 201 : 400)
+    // response.status(skill ? 201 : 400)
+    skill.tags = []
     response.json(skill)
   }).catch(next)
 })
